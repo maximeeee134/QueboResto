@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Leaflet Map</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        /* Essential: Define height for the map container */
+        #map { height: 500px; width: 100%; }
+        
+        /* Custom Popup Styling */
+        .custom-popup .leaflet-popup-content-wrapper {
+            background: #2c3e50;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .custom-popup .leaflet-popup-tip {
+            background: #2c3e50;
+        }
+        .custom-popup h3 { margin: 0 0 5px; color: #f1c40f; }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // 1. Initialize the map (Latitude, Longitude, Zoom Level)
+        var map = L.map('map').setView([45.508888, -73.561668], 12);
+
+        // 2. Add OpenStreetMap Tile Layer
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // 3. Define Multiple Locations (Array of Objects)
+        var locations = [
+            { lat: 45.508888, lng: -73.561668, title: "montreal", desc: "big city in quebec" },
+        ];
+
+        // 4. Loop Through Data to Add Markers
+        locations.forEach(function(loc) {
+            var marker = L.marker([loc.lat, loc.lng]).addTo(map);
+            
+            // Create HTML content for the popup
+            var popupContent = `<h3>${loc.title}</h3><p>${loc.desc}</p>`;
+            
+            // Bind popup with custom class option
+            marker.bindPopup(popupContent, { className: 'custom-popup' });
+        });
+    </script>
+</body>
+</html>   
